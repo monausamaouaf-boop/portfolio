@@ -1104,14 +1104,15 @@ body.lang-transition {
     position: absolute;
 }
 
-/* Hover card effect */
-.tilt-card-wrap {
-    perspective: 1000px;
+/* Contact card hover */
+.contact-form-wrapper {
+    transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
 }
 
-.tilt-card {
-    transition: transform 0.15s ease-out, box-shadow var(--transition);
-    will-change: transform;
+.contact-form-wrapper:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.14);
+    border-color: rgba(255, 255, 255, 0.22);
 }
 
 .form-feedback {
@@ -1158,6 +1159,25 @@ body.lang-transition {
     text-align: center;
     padding: 24px;
     font-size: 0.88rem;
+}
+
+.footer-memorial {
+    margin-top: 12px;
+    font-size: 0.8rem;
+    line-height: 1.8;
+    opacity: 0.72;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.footer-memorial-ar {
+    font-family: var(--font-ar);
+    font-size: 0.95rem;
+}
+
+.footer-memorial-en {
+    font-style: italic;
 }
 
 /* Scroll reveal */

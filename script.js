@@ -1,4 +1,6 @@
-/* Mona Osama portfolio interactions and localization */
+/* ============================================
+   Mona Osama Portfolio — Interactions & i18n
+   ============================================ */
 
 const FORMSPREE_FORM_ID = 'xykqqwoa';
 const FORMSPREE_ENDPOINT = `https://formspree.io/f/${FORMSPREE_FORM_ID}`;
@@ -20,9 +22,9 @@ const i18n = {
         },
         about: {
             title: 'About Me',
-            text: `I am a Customer Service Specialist with over 3 years of experience in call center operations and online order management. I focus on solving customer issues, improving service flow, and maintaining strong satisfaction levels.
+            text: `I am a Customer Service Specialist with over 3 years of experience in call center operations and online order management within the fast-food industry. I specialize in resolving complex customer complaints, optimizing delivery workflows, and maintaining strong satisfaction rates through clear and empathetic communication.
 
-I graduated in Arabic Linguistics from Al-Azhar University and bring strong communication and writing skills to my work. I also volunteer as an online Quran and Tajweed teacher.`
+With a degree in Arabic Linguistics from Al-Azhar University, I bring excellent communication and writing skills to my professional roles, alongside experience as a digital news editor. Outside of my career, I am deeply committed to community service, volunteering as a Quran and Tajweed instructor. I am looking for a challenging customer operations role where I can deliver impactful service solutions and drive business growth.`
         },
         experience: { title: 'Professional Experience', volunteer: 'Volunteering' },
         skills: { title: 'Core Skills & Expertise' },
@@ -44,9 +46,9 @@ I graduated in Arabic Linguistics from Al-Azhar University and bring strong comm
             formEmail: 'Email Address',
             formMessage: 'Message',
             formSubmit: 'Send Message',
-            errorName: 'Please enter your name (at least 2 characters)',
+            errorName: 'Please enter your name (at least 5 characters)',
             errorEmail: 'Please enter a valid email address',
-            errorMessage: 'Please enter your message (at least 10 characters)',
+            errorMessage: 'Please enter your message (at least 5 characters)',
             success: 'Thank you! Your message has been sent successfully.',
             error: 'Something went wrong. Please try again or contact me directly.',
             errorConfig: 'Form is not configured. Replace YOUR_FORM_ID in script.js with your Formspree form ID.',
@@ -94,9 +96,9 @@ I graduated in Arabic Linguistics from Al-Azhar University and bring strong comm
             formEmail: 'البريد الإلكتروني',
             formMessage: 'الرسالة',
             formSubmit: 'إرسال الرسالة',
-            errorName: 'يرجى إدخال اسمك (حرفان على الأقل)',
+            errorName: 'يرجى إدخال اسمك (5 أحرف على الأقل)',
             errorEmail: 'يرجى إدخال بريد إلكتروني صحيح',
-            errorMessage: 'يرجى إدخال رسالتك (10 أحرف على الأقل)',
+            errorMessage: 'يرجى إدخال رسالتك (5 أحرف على الأقل)',
             success: 'شكراً لك! تم إرسال رسالتك بنجاح.',
             error: 'حدث خطأ. يرجى المحاولة مرة أخرى أو التواصل مباشرة.',
             errorConfig: 'النموذج غير مُعدّ. استبدل YOUR_FORM_ID في script.js بمعرّف Formspree الخاص بك.',
@@ -248,7 +250,10 @@ function initBirthdaySurprise() {
 
     const runCountdown = () => {
         if (step >= values.length) {
-            launchBirthdayEffects();
+            setTimeout(() => {
+                countdown.classList.remove('show');
+                launchBirthdayEffects();
+            }, 800);
             return;
         }
 
@@ -271,49 +276,50 @@ function initBirthdaySurprise() {
             canvas.classList.add('active');
         }
 
-        if (window.confetti) {
-            const confettiInstance = typeof window.confetti.create === 'function' && canvas
-                ? window.confetti.create(canvas, {
-                    resize: true,
-                    useWorker: true,
-                    disableForReducedMotion: true
-                })
-                : null;
+        const confettiInstance = typeof window.confetti?.create === 'function' && canvas
+            ? window.confetti.create(canvas, {
+                resize: true,
+                useWorker: true,
+                disableForReducedMotion: true
+            })
+            : null;
 
-            const burst = (originY) => {
-                const options = {
-                    particleCount: 42,
-                    spread: 70,
-                    startVelocity: 28,
-                    origin: { y: originY },
-                    colors: ['#f7c8cf', '#e7c9ff', '#f7e1bd', '#ffffff', '#d9c7f2'],
-                    scalar: 0.9,
-                    gravity: 0.8,
-                    decay: 0.94,
-                    ticks: 220,
-                    zIndex: 5,
-                    disableForReducedMotion: true
-                };
-
-                if (confettiInstance) {
-                    confettiInstance(options);
-                } else {
-                    window.confetti(options);
-                }
+        const burst = (originY, particleCount) => {
+            const options = {
+                particleCount,
+                spread: 70,
+                startVelocity: 28,
+                origin: { y: originY },
+                colors: ['#f7c8cf', '#e7c9ff', '#f7e1bd', '#ffffff', '#d9c7f2'],
+                scalar: 0.9,
+                gravity: 0.8,
+                decay: 0.94,
+                ticks: 220,
+                zIndex: 5,
+                disableForReducedMotion: true
             };
 
-            burst(0.18);
-            setTimeout(() => burst(0.15), 220);
-            setTimeout(() => burst(0.2), 440);
-        }
+            if (confettiInstance) {
+                confettiInstance(options);
+            } else if (window.confetti) {
+                window.confetti(options);
+            }
+        };
 
-        const confettiDuration = 2400;
+        burst(0.18, 48);
+        setTimeout(() => burst(0.15, 42), 220);
+        setTimeout(() => burst(0.2, 38), 440);
+
+        setTimeout(() => {
+            countdown.classList.remove('show');
+        }, 800);
 
         setTimeout(() => {
             card.classList.add('active');
-        }, confettiDuration);
+        }, 250);
 
         setTimeout(() => {
+            card.classList.remove('active');
             overlay.classList.add('closing');
             document.body.classList.remove('birthday-active');
 
@@ -325,7 +331,7 @@ function initBirthdaySurprise() {
                     canvas.classList.remove('active');
                 }
             }, 650);
-        }, confettiDuration + 1200);
+        }, 5500);
     };
 
     runCountdown();
@@ -456,19 +462,7 @@ function typeEffect() {
     typingTimeout = setTimeout(typeEffect, speed);
 }
 
-function prefersReducedMotion() {
-    return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-}
-
 function observeElements(elements, className) {
-    const list = Array.from(elements || []);
-    if (!list.length) return;
-
-    if (!('IntersectionObserver' in window) || prefersReducedMotion()) {
-        list.forEach(el => el.classList.add(className));
-        return;
-    }
-
     const observer = new IntersectionObserver(
         entries => {
             entries.forEach(entry => {
@@ -480,8 +474,7 @@ function observeElements(elements, className) {
         },
         { threshold: 0.1, rootMargin: '0px 0px -30px 0px' }
     );
-
-    list.forEach(el => observer.observe(el));
+    elements.forEach(el => observer.observe(el));
 }
 
 function initScrollReveal() {
@@ -492,16 +485,6 @@ function initScrollReveal() {
 function initScrollSpy() {
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.nav-link[data-section]');
-
-    if (!('IntersectionObserver' in window) || prefersReducedMotion()) {
-        const activeSection = sections[0];
-        if (activeSection) {
-            navLinks.forEach(link => {
-                link.classList.toggle('active', link.dataset.section === activeSection.id);
-            });
-        }
-        return;
-    }
 
     const observer = new IntersectionObserver(
         entries => {
@@ -522,86 +505,33 @@ function initScrollSpy() {
 
 function initHeader() {
     const header = document.getElementById('header');
-    if (!header) return;
-
-    let ticking = false;
-
-    const updateHeader = () => {
+    window.addEventListener('scroll', () => {
         header.classList.toggle('scrolled', window.scrollY > 20);
-        ticking = false;
-    };
-
-    const onScroll = () => {
-        if (!ticking) {
-            ticking = true;
-            window.requestAnimationFrame(updateHeader);
-        }
-    };
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    updateHeader();
+    }, { passive: true });
 }
 
 function initMobileNav() {
     const toggle = document.getElementById('navToggle');
     const nav = document.getElementById('nav');
 
-    if (!toggle || !nav) return;
-
-    const setNavState = open => {
-        nav.classList.toggle('open', open);
+    toggle.addEventListener('click', () => {
+        const open = nav.classList.toggle('open');
         toggle.classList.toggle('open', open);
         toggle.setAttribute('aria-expanded', open);
-    };
-
-    toggle.addEventListener('click', () => {
-        setNavState(!nav.classList.contains('open'));
     });
 
     nav.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', () => setNavState(false));
-    });
-
-    document.addEventListener('keydown', event => {
-        if (event.key === 'Escape') {
-            setNavState(false);
-        }
-    });
-
-    document.addEventListener('click', event => {
-        if (!nav.classList.contains('open')) return;
-        const clickedInside = nav.contains(event.target) || toggle.contains(event.target);
-        if (!clickedInside) {
-            setNavState(false);
-        }
+        link.addEventListener('click', () => {
+            nav.classList.remove('open');
+            toggle.classList.remove('open');
+            toggle.setAttribute('aria-expanded', 'false');
+        });
     });
 }
 
 function initLangSwitcher() {
     document.querySelectorAll('.lang-btn').forEach(btn => {
         btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
-    });
-}
-
-function initTiltEffect() {
-    if (prefersReducedMotion() || window.matchMedia('(hover: none)').matches) return;
-
-    const cards = document.querySelectorAll('[data-tilt]');
-    cards.forEach(card => {
-        card.addEventListener('mousemove', e => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const xc = rect.width / 2;
-            const yc = rect.height / 2;
-            const angleX = (yc - y) / 15;
-            const angleY = (x - xc) / 15;
-            card.style.transform = `rotateX(${angleX}deg) rotateY(${angleY}deg) scale(1.01)`;
-        });
-
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
-        });
     });
 }
 
@@ -615,15 +545,11 @@ function initContactForm() {
     form.method = 'POST';
 
     function showFeedback(type, message) {
-        feedback.innerHTML = '';
+        const icon = type === 'success'
+            ? '<i class="fas fa-check-circle"></i>'
+            : '<i class="fas fa-exclamation-circle"></i>';
+        feedback.innerHTML = `${icon}<span>${message}</span>`;
         feedback.className = `form-feedback ${type} show`;
-
-        const icon = document.createElement('i');
-        icon.className = type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
-        const text = document.createElement('span');
-        text.textContent = message;
-
-        feedback.append(icon, text);
     }
 
     function clearFeedback() {
@@ -703,6 +629,5 @@ document.addEventListener('DOMContentLoaded', () => {
     initHeader();
     initMobileNav();
     initLangSwitcher();
-    initTiltEffect();
     initContactForm();
 });
