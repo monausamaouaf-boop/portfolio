@@ -1,6 +1,4 @@
-/* ============================================
-   Mona Osama Portfolio — Interactions & i18n
-   ============================================ */
+/* Mona Osama portfolio interactions and localization */
 
 const FORMSPREE_FORM_ID = 'xykqqwoa';
 const FORMSPREE_ENDPOINT = `https://formspree.io/f/${FORMSPREE_FORM_ID}`;
@@ -22,9 +20,9 @@ const i18n = {
         },
         about: {
             title: 'About Me',
-            text: `I am a Customer Service Specialist with over 3 years of experience in call center operations and online order management within the fast-food industry. I specialize in resolving complex customer complaints, optimizing delivery workflows, and maintaining strong satisfaction rates through clear and empathetic communication.
+            text: `I am a Customer Service Specialist with over 3 years of experience in call center operations and online order management. I focus on solving customer issues, improving service flow, and maintaining strong satisfaction levels.
 
-With a degree in Arabic Linguistics from Al-Azhar University, I bring excellent communication and writing skills to my professional roles, alongside experience as a digital news editor. Outside of my career, I am deeply committed to community service, volunteering as a Quran and Tajweed instructor. I am looking for a challenging customer operations role where I can deliver impactful service solutions and drive business growth.`
+I graduated in Arabic Linguistics from Al-Azhar University and bring strong communication and writing skills to my work. I also volunteer as an online Quran and Tajweed teacher.`
         },
         experience: { title: 'Professional Experience', volunteer: 'Volunteering' },
         skills: { title: 'Core Skills & Expertise' },
