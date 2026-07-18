@@ -22,9 +22,9 @@ const i18n = {
         },
         about: {
             title: 'About Me',
-            text: `I am a Customer Service Specialist with over 3 years of experience in call center operations and online order management within the fast-food industry. I specialize in resolving complex customer complaints, optimizing delivery workflows, and maintaining strong satisfaction rates through clear and empathetic communication.
+            text: `Customer Service Specialist with 3+ years of experience in call centers and online food ordering. Skilled in customer support, order management, and problem-solving.
 
-With a degree in Arabic Linguistics from Al-Azhar University, I bring excellent communication and writing skills to my professional roles, alongside experience as a digital news editor. Outside of my career, I am deeply committed to community service, volunteering as a Quran and Tajweed instructor. I am looking for a challenging customer operations role where I can deliver impactful service solutions and drive business growth.`
+Arabic Linguistics graduate from Al-Azhar University and a volunteer Quran & Tajweed teacher.`
         },
         experience: { title: 'Professional Experience', volunteer: 'Volunteering' },
         skills: { title: 'Core Skills & Expertise' },
