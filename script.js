@@ -216,7 +216,7 @@ let charIndex = 0;
 let isDeleting = false;
 let typingTimeout = null;
 
-const BIRTHDAY_SURPRISE_CUTOFF = new Date(2026, 6, 20, 23, 59, 59);
+const BIRTHDAY_SURPRISE_CUTOFF = new Date(2026, 6, 22, 23, 59, 59);
 
 function shouldShowBirthdaySurprise() {
     const now = new Date();
@@ -246,14 +246,24 @@ function initBirthdaySurprise() {
     }
 
     const values = ['3', '2', '1', '0'];
+    const countdownDelay = 700;
+    const zeroHoldMs = 800;
+    const confettiStartDelay = 120;
+    const cardDisplayMs = 5000;
+    const closeDelayMs = 650;
     let step = 0;
 
     const runCountdown = () => {
         if (step >= values.length) {
+            countdown.textContent = '0';
+            countdown.classList.remove('show');
+            void countdown.offsetWidth;
+            countdown.classList.add('show');
+
             setTimeout(() => {
                 countdown.classList.remove('show');
                 launchBirthdayEffects();
-            }, 800);
+            }, zeroHoldMs);
             return;
         }
 
@@ -263,15 +273,10 @@ function initBirthdaySurprise() {
         countdown.classList.add('show');
         step += 1;
 
-        setTimeout(runCountdown, 700);
+        setTimeout(runCountdown, countdownDelay);
     };
 
     const launchBirthdayEffects = () => {
-        countdown.textContent = '0';
-        countdown.classList.remove('show');
-        void countdown.offsetWidth;
-        countdown.classList.add('show');
-
         if (canvas) {
             canvas.classList.add('active');
         }
@@ -311,12 +316,8 @@ function initBirthdaySurprise() {
         setTimeout(() => burst(0.2, 38), 440);
 
         setTimeout(() => {
-            countdown.classList.remove('show');
-        }, 800);
-
-        setTimeout(() => {
             card.classList.add('active');
-        }, 250);
+        }, confettiStartDelay);
 
         setTimeout(() => {
             card.classList.remove('active');
@@ -330,8 +331,8 @@ function initBirthdaySurprise() {
                 if (canvas) {
                     canvas.classList.remove('active');
                 }
-            }, 650);
-        }, 5500);
+            }, closeDelayMs);
+        }, confettiStartDelay + cardDisplayMs);
     };
 
     runCountdown();

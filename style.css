@@ -1216,9 +1216,9 @@ body.lang-transition {
 .birthday-backdrop {
     position: absolute;
     inset: 0;
-    background: rgba(11, 10, 18, 0.76);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    background: rgba(10, 10, 16, 0.86);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
     transition: opacity 0.45s ease;
 }
 
@@ -1275,13 +1275,21 @@ body.lang-transition {
     line-height: 1.6;
     font-weight: 700;
     margin-bottom: 12px;
+    text-shadow: 0 4px 22px rgba(0, 0, 0, 0.2);
 }
 
 .birthday-quote {
     font-family: var(--font-ar);
-    font-size: clamp(1rem, 2.3vw, 1.3rem);
+    font-size: clamp(0.95rem, 2.1vw, 1.15rem);
     line-height: 1.8;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+.birthday-surprise.active .birthday-card.active .birthday-quote {
     opacity: 0.8;
+    transform: translateY(0);
 }
 
 .birthday-canvas {
