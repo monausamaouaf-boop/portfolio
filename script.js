@@ -216,7 +216,7 @@ let charIndex = 0;
 let isDeleting = false;
 let typingTimeout = null;
 
-const BIRTHDAY_SURPRISE_CUTOFF = new Date(2026, 7, 22, 23, 59, 59);
+const BIRTHDAY_SURPRISE_CUTOFF = new Date(2025, 7, 20, 23, 59, 59);
 
 function shouldShowBirthdaySurprise() {
     const now = new Date();
@@ -224,7 +224,7 @@ function shouldShowBirthdaySurprise() {
 }
 
 function initBirthdaySurprise() {
-    if (!shouldShowBirthdaySurprise()) return;
+    if (!shouldShowBirthdaySurprise()) return ;
 
     const overlay = document.getElementById('birthdaySurprise');
     const countdown = document.getElementById('birthdayCountdown');
