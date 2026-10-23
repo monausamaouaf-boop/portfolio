@@ -151,7 +151,9 @@ const i18n = {
             errorEmail: 'Please enter a valid email address',
             errorSubject: 'Please add a short subject (at least 3 characters)',
             errorMessage: 'Please enter your message (at least 10 characters)',
-            success: 'Thank you! Your message has been sent successfully.',
+            successTitle: 'Message sent successfully',
+            success: 'Thank you for reaching out! Your message was sent successfully, and I will get back to you as soon as possible.',
+            sendAnother: 'Send another message',
             error: 'Something went wrong. Please try again or contact me directly.',
             errorConfig: 'Form is not configured. Please add your Formspree form ID in script.js.',
             timeout: 'The request took too long. Please check your connection and try again.',
@@ -287,7 +289,9 @@ const i18n = {
             errorEmail: 'يرجى إدخال بريد إلكتروني صحيح',
             errorSubject: 'يرجى إضافة موضوع قصير (3 أحرف على الأقل)',
             errorMessage: 'يرجى إدخال رسالتك (10 أحرف على الأقل)',
-            success: 'شكراً لك! تم إرسال رسالتك بنجاح.',
+            successTitle: 'تم إرسال الرسالة بنجاح',
+            success: 'شكراً لتواصلكم معي! تم إرسال رسالتكم بنجاح وسأقوم بالرد عليكم في أقرب وقت.',
+            sendAnother: 'إرسال رسالة أخرى',
             error: 'حدث خطأ. يرجى المحاولة مرة أخرى أو التواصل مباشرة.',
             errorConfig: 'النموذج غير مُعدّ. يرجى إضافة معرّف Formspree في ملف script.js.',
             timeout: 'استغرق الطلب وقتاً طويلاً. يرجى التحقق من الاتصال والمحاولة مجدداً.',
@@ -1006,6 +1010,9 @@ function initContactForm() {
     const submitButton = document.getElementById('submitBtn');
     const message = document.getElementById('message');
     const counter = document.getElementById('messageCounter');
+    const wrapper = document.getElementById('formWrapper');
+    const successPanel = document.getElementById('formSuccess');
+    const sendAnotherButton = document.getElementById('sendAnother');
 
     const fields = {
         name: form.querySelector('#name'),
@@ -1062,6 +1069,28 @@ function initContactForm() {
         renderContactFeedback();
     };
 
+    const showSuccess = () => {
+        state.feedback = null;
+        renderContactFeedback();
+        resetForm();
+        fieldOrder.forEach(input => {
+            input.closest('.form-group').classList.remove('invalid');
+            input.removeAttribute('aria-invalid');
+        });
+
+        if (wrapper) wrapper.classList.add('is-sent');
+        if (successPanel) successPanel.focus({ preventScroll: true });
+    };
+
+    const restoreForm = () => {
+        if (wrapper) wrapper.classList.remove('is-sent');
+        if (fields.name) fields.name.focus({ preventScroll: true });
+    };
+
+    if (sendAnotherButton) {
+        sendAnotherButton.addEventListener('click', restoreForm);
+    }
+
     const setLoading = loading => {
         submitButton.classList.toggle('loading', loading);
         submitButton.disabled = loading;
@@ -1071,19 +1100,6 @@ function initContactForm() {
         if (text) {
             text.textContent = loading ? t('contact.sending') : t('contact.formSubmit');
         }
-    };
-
-    const celebrate = () => {
-        if (typeof window.confetti !== 'function' || prefersReducedMotion()) return;
-
-        window.confetti({
-            particleCount: 90,
-            spread: 70,
-            startVelocity: 34,
-            origin: { y: 0.72 },
-            colors: ['#c98a9a', '#8f7aa8', '#e8c9b8', '#f4e6ea'],
-            disableForReducedMotion: true
-        });
     };
 
     updateCounter();
@@ -1120,8 +1136,7 @@ function initContactForm() {
         // Honeypot: pretend success for bots without sending anything.
         const honeypot = form.querySelector('[name="_gotcha"]');
         if (honeypot && honeypot.value) {
-            showFeedback('success', 'contact.success');
-            resetForm();
+            showSuccess();
             return;
         }
 
@@ -1142,13 +1157,7 @@ function initContactForm() {
             window.clearTimeout(timer);
 
             if (response.ok) {
-                showFeedback('success', 'contact.success');
-                resetForm();
-                fieldOrder.forEach(input => {
-                    input.closest('.form-group').classList.remove('invalid');
-                    input.removeAttribute('aria-invalid');
-                });
-                celebrate();
+                showSuccess();
             } else {
                 const serverMessage = Array.isArray(data.errors)
                     ? data.errors.map(error => error.message).filter(Boolean).join(' ')
